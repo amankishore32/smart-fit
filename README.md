@@ -1,8 +1,13 @@
 # SmartFit AI - Semantic Resume Matcher
 
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)
+![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)
+![Gemini](https://img.shields.io/badge/Google%20Gemini-8E75B2?style=for-the-badge&logo=google%20cloud&logoColor=white)
+
 SmartFit AI is a powerful tool that uses Google's Generative AI to semantically match candidate resumes against job descriptions. Unlike keyword-based matchers, SmartFit understands the context and meaning of skills and experiences to provide a more accurate ranking of candidates.
 
-Validates the resume against the Job Description(JD). Simply provide the JD shared and upload the resume(s) and let the AI do its magic. Get the score of your Resumé alignment with JD.
+SmartFit validates resumes against a Job Description (JD) using pure semantic meaning. Simply input the JD, bulk upload PDF resumes, and let the AI calculate an alignment score based on intent, not just keywords.
 
 ## Features
 
@@ -138,30 +143,21 @@ smart-fit/
 
 ## Architecture
 
-```
-┌─────────────────────────────────┐
-│   Web UI (Streamlit - ui.py)    │
-│  (http://localhost:8501)        │
-└────────────────┬────────────────┘
-                 │ HTTP Request
-                 ▼
-┌─────────────────────────────────┐
-│  FastAPI Server (api.py)        │
-│  (http://localhost:8000)        │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-┌─────────────────────────────────┐
-│  Matching Engine (engine.py)    │
-│  - Parse PDFs                   │
-│  - Generate Embeddings          │
-│  - Calculate Scores             │
-└────────────────┬────────────────┘
-                 │
-                 ▼
-        Google Gemini API
-        (text-embedding-004)
-```
+graph TD
+    User((User))
+    UI[Web UI / Streamlit]
+    API[FastAPI Server]
+    Engine[Matching Engine]
+    Gemini[Google Gemini Pro]
+
+    User -->|Uploads PDF & JD| UI
+    UI -->|HTTP POST /rank-candidates| API
+    API -->|Parse & Process| Engine
+    Engine -->|Generate Embeddings| Gemini
+    Gemini -->|Return Vectors| Engine
+    Engine -->|Return Ranked Results| API
+    API -->|JSON Response| UI
+    
 
 ## How It Works
 

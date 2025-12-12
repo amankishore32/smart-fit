@@ -10,7 +10,7 @@ It allows users to:
 The application communicates with a FastAPI backend at http://localhost:8000
 to perform the semantic matching using Google's Generative AI embeddings.
 
-Author: SmartFit Team
+Author: Aman Kishore Agarwal
 Version: 1.0.0
 """
 
