@@ -143,6 +143,7 @@ smart-fit/
 
 ## Architecture
 
+```mermaid
 graph TD
     User((User))
     UI[Web UI / Streamlit]
@@ -157,7 +158,7 @@ graph TD
     Gemini -->|Return Vectors| Engine
     Engine -->|Return Ranked Results| API
     API -->|JSON Response| UI
-    
+```
 
 ## How It Works
 
